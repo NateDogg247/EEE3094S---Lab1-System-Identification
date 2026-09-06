@@ -1,5 +1,8 @@
 \documentclass[12pt,a4paper]{article}
 
+% ============================================================
+% Packages
+% ============================================================
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
@@ -12,10 +15,13 @@
 \usepackage{float}
 \usepackage{siunitx}
 \usepackage{enumitem}
-\usepackage{listings}
-\usepackage{xcolor}
+\usepackage[table]{xcolor}
 \usepackage{caption}
 \usepackage{microtype}
+\usepackage{longtable}
+\usepackage{url}
+
+
 \usepackage[
   colorlinks=true,
   linkcolor=blue!55!black,
@@ -25,76 +31,1901 @@
   bookmarksopen=true,
   bookmarksnumbered=true
 ]{hyperref}
+
 \usepackage[nameinlink,capitalise,noabbrev]{cleveref}
 
+% ============================================================
+% Document formatting
+% ============================================================
+
 \linespread{1.06}
+
 \setlength{\parskip}{7pt plus 2pt minus 1pt}
 \setlength{\parindent}{0pt}
+
 \widowpenalty=10000
 \clubpenalty=10000
+
 \setlist{nosep}
 
-\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
-\newcommand{\studentnumber}{\textit{Student number: add here}}
-\sisetup{round-mode=places,round-precision=3}
+\sisetup{
+    round-mode=places,
+    round-precision=3
+}
+
 \urlstyle{same}
+
+% Allows compilation using either the original LaTeX structure
+% or the GitHub repository structure.
+\graphicspath{
+    {figures/}
+    {Figures/}
+    {../Figures/}
+    {./}
+}
+
+% ============================================================
+% Student information
+% ============================================================
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\newcommand{\studentname}{Junaid Pieters}
+\newcommand{\studentnumber}{PTRJUN003}
+
+% ============================================================
+% GitHub repository
+% ============================================================
+
+\newcommand{\repourl}{
+https://github.com/NateDogg247/EEE3094S---Lab1-System-Identification
+}
+
+% MATLAB code
+\newcommand{\stepcodeurl}{
+https://github.com/NateDogg247/EEE3094S---Lab1-System-Identification/blob/main/Matlab/step_response_validation.m
+}
+
+\newcommand{\bodecodeurl}{
+https://github.com/NateDogg247/EEE3094S---Lab1-System-Identification/blob/main/Matlab/bode_validation.m
+}
+
+% Raw experimental data
+\newcommand{\stepdataurl}{
+https://github.com/NateDogg247/EEE3094S---Lab1-System-Identification/tree/main/Data/Step\%20Test
+}
+
+\newcommand{\freqdataurl}{
+https://github.com/NateDogg247/EEE3094S---Lab1-System-Identification/tree/main/Data/Frequency\%20Test
+}
+
+% Processed results
+\newcommand{\stepprocessedurl}{
+https://github.com/NateDogg247/EEE3094S---Lab1-System-Identification/blob/main/Data/step_test/step_identification_results.csv
+}
+
+\newcommand{\freqprocessedurl}{
+https://github.com/NateDogg247/EEE3094S---Lab1-System-Identification/blob/main/Data/frequency_test/frequency_results_matlab.csv
+}
+
+\newcommand{\modelcomparisonurl}{
+https://github.com/NateDogg247/EEE3094S---Lab1-System-Identification/blob/main/Data/frequency_test/model_comparison_matlab.csv
+}
+
+% Figures and report
+\newcommand{\figuresurl}{
+https://github.com/NateDogg247/EEE3094S---Lab1-System-Identification/tree/main/Figures
+}
+
+\newcommand{\latexurl}{
+https://github.com/NateDogg247/EEE3094S---Lab1-System-Identification/blob/main/Report/main.tex
+}
+
+\newcommand{\reportpdfurl}{
+https://github.com/NateDogg247/EEE3094S---Lab1-System-Identification/blob/main/Report/PTRJUN003_EEE3094S_Lab1_Report.pdf
+}
+
+% ============================================================
+% PDF information
+% ============================================================
+
 \hypersetup{
   pdftitle={EEE3094S Lab 1 - System Identification},
   pdfauthor={Junaid Pieters},
   pdfsubject={System identification of a simulated spring-mass-damper suspension system}
 }
 
-\lstset{
-  basicstyle=\ttfamily\footnotesize,
-  numbers=left,
-  numberstyle=\tiny,
-  frame=single,
-  breaklines=true,
-  columns=fullflexible,
-  showstringspaces=false
-}
+% ============================================================
+% Start document
+% ============================================================
 
 \begin{document}
 
+% ============================================================
+% Title page
+% ============================================================
+
 \hypersetup{pageanchor=false}
-\include{tex/titlepage}
+
+\begin{titlepage}
+
+\begin{center}
+
+\IfFileExists{UCTLOGO.png}{
+    \includegraphics[width=0.30\textwidth]{UCTLOGO.png}\\[1.5cm]
+}{
+    \vspace*{1.5cm}
+}
+
+\HRule \\[0.4cm]
+
+{\LARGE
+\textbf{Lab 1 Report}\\[0.35cm]
+
+\emph{System Identification}\\[0.35cm]
+}
+
+\HRule \\[1.3cm]
+
+{\large
+
+\textbf{\studentname}\\[0.25cm]
+
+\studentnumber\\[0.25cm]
+
+EEE3094S Control Systems Engineering
+
+}
+
+\vfill
+
+\textsc{
+\large
+Department of Electrical Engineering
+}\\[0.4cm]
+
+{\large University of Cape Town}\\[0.4cm]
+
+{\large September 06, 2026}
+
+\end{center}
+
+\end{titlepage}
+
+% ============================================================
+% Navigation
+% ============================================================
+
 \clearpage
+
 \hypersetup{pageanchor=true}
+
 \pagenumbering{roman}
 
 \tableofcontents
+
 \clearpage
 
 \phantomsection
 \addcontentsline{toc}{section}{List of Figures}
+
 \listoffigures
+
 \clearpage
 
 \phantomsection
 \addcontentsline{toc}{section}{List of Tables}
+
 \listoftables
+
 \clearpage
 
 \pagenumbering{arabic}
+
 \setcounter{page}{1}
 
-\input{tex/introduction}
-\input{tex/system_modelling}
-\input{tex/system_id}
-\input{tex/conclusion}
+% ============================================================
+% 1. Introduction
+% ============================================================
+
+\section{Introduction}
+\label{sec:intro}
+
+The aim of this laboratory was to identify a workable dynamic model
+of the suspension simulator using two complementary experiments:
+a step-response test and a frequency-response test.
+
+The laboratory system is a simulated spring--mass--damper system
+whose parameters are unique to the student. The lab brief
+specifically requires the time-domain response to be used to
+estimate the gain, pole type and dominant pole location, and then
+requires sinusoidal tests to confirm those estimates in the
+frequency domain \cite{labbrief}.
+
+The measured system was found to be a lightly overshooting but
+relatively well-damped second-order system. The step test was first
+used to estimate the steady-state gain, damping ratio, natural
+frequency and complex pole pair.
+
+Nine sinusoidal tests were then performed between
+$0.500~\mathrm{rad/s}$ and $8.000~\mathrm{rad/s}$, with extra points
+placed around the frequency predicted by the step test.
+
+Finally, the independently estimated time- and frequency-domain
+models were combined and validated against both experimental
+datasets.
+
+All raw measurements, processed results, MATLAB analysis scripts,
+generated figures and the report source are archived in the public
+project repository \cite{githubrepo}. Direct links to the main
+reproducibility files are provided in \Cref{sec:appendix}.
+
+% ============================================================
+% 2. System Modelling
+% ============================================================
+
+\section{System Modelling}
+\label{sec:model}
+
+% ------------------------------------------------------------
+\subsection{Physical Model}
+% ------------------------------------------------------------
+
+The simulated suspension is described in the lab brief by
+
+\begin{equation}
+    m\ddot{x}(t)
+    =
+    -b\dot{x}(t)
+    -kx(t)
+    +F(t),
+    \label{eq:eom}
+\end{equation}
+
+where $x(t)$ is displacement, $b$ is the damping coefficient,
+$k$ is the spring coefficient, and $F(t)$ is the applied force.
+
+The lab specifies that the parameters are scaled to the mass, so
+$m=1$, and that the applied force is directly proportional to the
+simulator voltage input \cite{labbrief}.
+
+Let the proportionality constant between simulator input $u(t)$
+and force be $c$, such that
+
+\begin{equation}
+    F(t)=cu(t).
+\end{equation}
+
+Equation~\eqref{eq:eom} therefore becomes
+
+\begin{equation}
+    \ddot{x}(t)
+    +
+    b\dot{x}(t)
+    +
+    kx(t)
+    =
+    cu(t).
+\end{equation}
+
+Taking the Laplace transform with zero initial conditions gives
+
+\begin{equation}
+    G(s)
+    =
+    \frac{X(s)}{U(s)}
+    =
+    \frac{c}{s^2+bs+k}.
+    \label{eq:physical_tf}
+\end{equation}
+
+For identification, the same transfer function can be written in
+the standard second-order form
+
+\begin{equation}
+    G(s)
+    =
+    \frac{K\omega_n^2}
+    {s^2+2\zeta\omega_n s+\omega_n^2},
+    \label{eq:second_order}
+\end{equation}
+
+where $K$ is the DC gain, $\zeta$ is the damping ratio, and
+$\omega_n$ is the natural frequency.
+
+Comparing
+\cref{eq:physical_tf,eq:second_order}
+gives
+
+\begin{equation}
+    b=2\zeta\omega_n,
+    \qquad
+    k=\omega_n^2,
+    \qquad
+    c=K\omega_n^2.
+    \label{eq:parameter_map}
+\end{equation}
+
+% ------------------------------------------------------------
+\subsection{Experimental Method}
+% ------------------------------------------------------------
+
+The suspension simulator was operated in ``Laboratory Testing''
+mode.
+
+The manual states that the logged input and output displacement
+are sampled every \SI{100}{ms} \cite{manual}.
+
+The recorded CSV files were analysed as follows:
+
+\begin{enumerate}
+
+    \item
+    For the step test, the step instant was shifted to $t=0$ and
+    the initial displacement was subtracted from the output.
+    The actual recorded input step was $\Delta u=4$, so all gain
+    calculations were normalised by this known step size rather
+    than assuming a unit step.
+
+    \item
+    For the frequency test, sinusoidal tests were performed at
+    nine angular frequencies from 0.5 to 8 rad/s, with additional
+    measurements around the predicted corner region.
+
+    The measured input was approximately a sinusoid of amplitude
+    2 about a DC offset of 4. The offset does not affect the
+    sinusoidal gain calculation for an LTI model; only the AC
+    amplitudes were used.
+
+    \item
+    At each test frequency, the first four cycles were discarded
+    to reduce transient contamination. A sine/cosine
+    least-squares fit was then used to determine the input and
+    output amplitudes and phase angles.
+
+    \item
+    The resulting model was validated against both the measured
+    step response and the measured frequency response.
+
+\end{enumerate}
+
+The complete MATLAB implementations used to reproduce these
+calculations are available in the repository \cite{githubrepo};
+direct links are listed in \Cref{tab:reprolinks}.
+
+The two experiments and the information extracted from each are
+summarised in \cref{tab:testplan}.
+
+\begin{table}[H]
+    \centering
+    \caption{Summary of experimental tests.}
+    \label{tab:testplan}
+
+    \renewcommand{\arraystretch}{1.35}
+
+    \begin{tabular}{
+        |>{\centering\arraybackslash}p{0.22\textwidth}
+        |>{\centering\arraybackslash}p{0.22\textwidth}
+        |p{0.44\textwidth}|
+    }
+        \hline
+
+        \rowcolor{gray!15}
+        \textbf{Test} &
+        \textbf{Input} &
+        \textbf{Purpose} \\
+
+        \hline
+
+        Step response &
+        $0 \rightarrow 4$ &
+        Estimate the DC gain, damping ratio, natural frequency and complex pole pair. \\
+
+        \hline
+
+        Frequency response &
+        $0.5$--$8~\mathrm{rad/s}$ &
+        Confirm the gain and natural-frequency region using measured magnitude and phase. \\
+
+        \hline
+
+        Model validation &
+        Measured datasets &
+        Compare the proposed transfer function with the experimental time- and frequency-domain responses. \\
+
+        \hline
+
+    \end{tabular}
+\end{table}
+
+% ============================================================
+% 3. System Identification
+% ============================================================
+
+\section{System Identification}
+\label{sec:system_id}
+
+% ------------------------------------------------------------
+\subsection{Step Response Test}
+% ------------------------------------------------------------
+
+\Cref{fig:stepinput} shows the recorded simulator input.
+
+In the raw log, the input changes from 0 to 4 at approximately
+
+\[
+t=\SI{16.3}{s}.
+\]
+
+For analysis, this instant was shifted to $t=0$.
+
+Because the step size is known, the use of a 4-unit step does not
+change the identification method; the steady-state output change
+is simply divided by four.
+
+\begin{figure}[H]
+
+    \centering
+
+    \includegraphics[
+        width=0.78\textwidth
+    ]{step_input.png}
+
+    \caption{
+    Measured step input. The recorded input changes from 0 to 4
+    at $t=0$.
+    }
+
+    \label{fig:stepinput}
+
+\end{figure}
+
+The initial displacement was
+
+\[
+y_0=5.000
+\]
+
+and the final displacement was
+
+\[
+y_{ss}=7.552.
+\]
+
+The steady-state output change was therefore
+
+\begin{equation}
+    \Delta y_{ss}
+    = 7.552 - 5.000
+    = 2.552
+    \tag{7}
+\end{equation}
+
+The DC gain is therefore
+
+\begin{equation}
+    \boldsymbol{
+    K_{\mathrm{step}}
+    = \frac{\Delta y_{ss}}{\Delta u}
+    = \frac{2.552}{4}
+    = 0.638
+    }
+    \tag{8}
+    \label{eq:step_gain}
+\end{equation}
+
+\vspace{0.2 cm}
+
+The principal measured values used in the step-response
+calculations are collected in \cref{tab:stepmeas}.
+
+\begin{table}[H]
+    \centering
+    \caption{Measured quantities from the step-response test.}
+    \label{tab:stepmeas}
+
+    \renewcommand{\arraystretch}{1.35}
+
+    \begin{tabular}{
+        |>{\raggedright\arraybackslash}p{0.50\textwidth}
+        |>{\centering\arraybackslash}p{0.28\textwidth}|
+    }
+        \hline
+
+        \rowcolor{gray!15}
+        \textbf{Quantity} &
+        \textbf{Measured Value} \\
+
+        \hline
+
+        Raw step time &
+        $16.3~\text{s}$ \\
+
+        \hline
+
+        Input change, $\Delta u$ &
+        $0 \rightarrow 4$ \\
+
+        \hline
+
+        Initial displacement, $y_0$ &
+        $5.000$ \\
+
+        \hline
+
+        Final displacement, $y_{ss}$ &
+        $7.552$ \\
+
+        \hline
+
+        Steady-state displacement change, $\Delta y_{ss}$ &
+        $2.552$ \\
+
+        \hline
+
+        First peak displacement, $y_{\mathrm{peak}}$ &
+        $7.628$ \\
+
+        \hline
+
+        Peak time relative to the step, $t_p$ &
+        $2.6~\text{s}$ \\
+
+        \hline
+    \end{tabular}
+\end{table}
+
+The zero-adjusted response is shown in
+\Cref{fig:stepresponse}.
+
+A small but clear overshoot is present, confirming that the poles
+are a complex-conjugate pair and that
+
+\[
+0<\zeta<1.
+\]
+
+In the raw log the first peak occurs at approximately
+
+\[
+t=\SI{18.9}{s}.
+\]
+
+Relative to the step at
+
+\[
+t=\SI{16.3}{s},
+\]
+
+the peak time is
+
+\begin{equation}
+    t_p
+    = 18.9 - 16.3
+    = \SI{2.6}{s}
+    \tag{9}
+\end{equation}
+
+The corresponding peak displacement is
+
+\[
+y_{peak}=7.628.
+\]
+
+The zero-adjusted peak displacement is therefore
+
+\[
+2.628.
+\]
+
+Hence,
+
+\begin{equation}
+    \boldsymbol{
+    M_p
+    = \frac{2.628 - 2.552}{2.552}
+    = 0.0298
+    = 2.98\%
+    }
+    \tag{10}
+\end{equation}
+
+The percentage overshoot is therefore approximately
+
+\[
+\boxed{\boldsymbol{\%OS \approx 2.98\%}}
+\]
+
+\begin{figure}[H]
+
+    \centering
+
+    \includegraphics[
+        width=0.78\textwidth
+    ]{step_response.png}
+
+    \caption{
+    Measured zero-adjusted step response. The final displacement
+    change, peak value, peak time and overshoot are annotated.
+    }
+
+    \label{fig:stepresponse}
+
+\end{figure}
+
+For an underdamped second-order system,
+
+\begin{equation}
+    M_p
+    = e^{-\zeta\pi/\sqrt{1-\zeta^2}}
+    \tag{11}
+\end{equation}
+
+The damping ratio can therefore be calculated directly as
+
+\begin{equation}
+    \zeta_{\mathrm{step}}
+    = \frac{-\ln(M_p)}
+    {\sqrt{\pi^2 + [\ln(M_p)]^2}}
+    = \mathbf{0.745}
+    \tag{12}
+\end{equation}
+
+The damped natural frequency follows from the peak time:
+
+\begin{equation}
+    \omega_d
+    = \frac{\pi}{t_p}
+    = \frac{\pi}{2.6}
+    = \mathbf{1.208}\,\mathrm{rad/s}
+    \tag{13}
+\end{equation}
+
+Thus,
+
+\begin{equation}
+    \omega_{n,\mathrm{step}}
+    = \frac{\omega_d}{\sqrt{1-\zeta^2}}
+    = \mathbf{1.813}\,\mathrm{rad/s}
+    \tag{14}
+\end{equation}
+
+The dominant complex pole pair is therefore
+
+\begin{equation}
+    \boldsymbol{s}
+    = -\zeta\omega_n \pm j\omega_d
+    = \mathbf{-1.351 \pm j1.208}
+    \tag{15}
+    \label{eq:step_poles}
+\end{equation}
+
+The measured 2\% settling time is approximately
+
+\begin{equation}
+    T_s
+    \approx \mathbf{3.2}\,\mathrm{s}
+    \tag{16}
+\end{equation}
+
+The standard estimate is
+
+\begin{equation}
+    \frac{4}{T_s}
+    \approx \mathbf{1.25}\,\mathrm{s^{-1}}
+    \tag{17}
+\end{equation}
+
+which is reasonably close to the calculated pole real part,
+
+\begin{equation}
+    \zeta\omega_n
+    \approx \mathbf{1.35}\,\mathrm{s^{-1}}
+    \tag{18}
+\end{equation}
+
+Substitution into \Cref{eq:second_order} gives the step-test model
+
+\begin{equation}
+    \boxed{
+        \boldsymbol{
+        G_{\mathrm{step}}(s)
+        = \frac{2.097}
+        {s^2 + 2.703s + 3.287}
+        }
+    }
+    \tag{19}
+    \label{eq:gstep}
+\end{equation}
+
+The corresponding parameter estimates are
+
+\begin{equation}
+    \boldsymbol{b_{\mathrm{step}} = 2.703},
+    \qquad
+    \boldsymbol{k_{\mathrm{step}} = 3.287}
+    \tag{20}
+\end{equation}
+
+\Cref{tab:stepparams} summarises the complete parameter set
+obtained from Stage 1.
+
+\begin{table}[H]
+    \centering
+    \caption{Parameters identified from the step response.}
+    \label{tab:stepparams}
+
+    \renewcommand{\arraystretch}{1.35}
+
+    \begin{tabular}{
+        |>{\raggedright\arraybackslash}p{0.38\textwidth}
+        |>{\centering\arraybackslash}p{0.22\textwidth}
+        |>{\centering\arraybackslash}p{0.24\textwidth}|
+    }
+        \hline
+
+        \rowcolor{gray!15}
+        \textbf{Parameter} &
+        \textbf{Symbol} &
+        \textbf{Estimate} \\
+
+        \hline
+
+        DC gain &
+        $K_{\mathrm{step}}$ &
+        $0.638$ \\
+
+        \hline
+
+        Percentage overshoot &
+        $\%OS$ &
+        $2.98\%$ \\
+
+        \hline
+
+        Damping ratio &
+        $\zeta_{\mathrm{step}}$ &
+        $0.745$ \\
+
+        \hline
+
+        Damped natural frequency &
+        $\omega_d$ &
+        $1.208~\mathrm{rad/s}$ \\
+
+        \hline
+
+        Natural frequency &
+        $\omega_{n,\mathrm{step}}$ &
+        $1.813~\mathrm{rad/s}$ \\
+
+        \hline
+
+        Dominant poles &
+        $s_{1,2}$ &
+        $-1.351 \pm j1.208$ \\
+
+        \hline
+
+        Damping coefficient &
+        $b_{\mathrm{step}}$ &
+        $2.703$ \\
+
+        \hline
+
+        Spring coefficient &
+        $k_{\mathrm{step}}$ &
+        $3.287$ \\
+
+        \hline
+    \end{tabular}
+\end{table}
+
+The important frequency predicted from the step response is
+therefore around
+
+\begin{equation}
+    \omega_n
+    \approx \mathbf{1.8}\,\mathrm{rad/s}
+    \tag{21}
+\end{equation}
+
+The relative $-3$ dB point of this model is approximately
+
+\begin{equation}
+    \omega_{-3\mathrm{dB}}
+    \approx \mathbf{1.71}\,\mathrm{rad/s}
+    \tag{22}
+\end{equation}
+
+This estimate motivated the denser frequency sampling between
+
+\begin{equation}
+    \mathbf{1.0}
+    \leq \omega \leq
+    \mathbf{2.2}\,\mathrm{rad/s}
+    \tag{23}
+\end{equation}
+
+\newpage
+
+% ------------------------------------------------------------
+\subsection{Frequency Response Test}
+% ------------------------------------------------------------
+
+The chosen frequencies span well below, around and well above the
+natural-frequency estimate obtained from the step test.
+
+In particular, the points at
+
+\[
+1.4,\quad 1.8,\quad 2.2~\mathrm{rad/s}
+\]
+
+provide additional resolution around the expected corner region,
+while
+
+\[
+3,\quad 5,\quad 8~\mathrm{rad/s}
+\]
+
+reveal the high-frequency roll-off.
+
+The choice of test points is summarised in
+\cref{tab:freqchoice}.
+
+\begin{table}[H]
+    \centering
+    \caption{Rationale for the selected sinusoidal test frequencies.}
+    \label{tab:freqchoice}
+
+    \renewcommand{\arraystretch}{1.35}
+
+    \begin{tabular}{
+        |>{\raggedright\arraybackslash}p{0.22\textwidth}
+        |>{\centering\arraybackslash}p{0.18\textwidth}
+        |>{\raggedright\arraybackslash}p{0.48\textwidth}|
+    }
+        \hline
+
+        \rowcolor{gray!15}
+        \textbf{Frequency band} &
+        \textbf{Test points (rad/s)} &
+        \textbf{Purpose} \\
+
+        \hline
+
+        Low frequency &
+        0.5, 0.8 &
+        Estimate the low-frequency/DC gain before the main roll-off \\
+
+        \hline
+
+        Transition region &
+        1.0, 1.4 &
+        Observe the start of the magnitude decrease and increasing phase lag \\
+
+        \hline
+
+        Predicted corner region &
+        1.8, 2.2 &
+        Resolve the region around the step-test estimate
+        $\omega_n \approx 1.8~\mathrm{rad/s}$ \\
+
+        \hline
+
+        High frequency &
+        3, 5, 8 &
+        Confirm the second-order roll-off and increasing phase lag \\
+
+        \hline
+    \end{tabular}
+\end{table}
+
+For each frequency, the sinusoidal input and output were
+represented as
+
+\begin{equation}
+    q(t)
+    = q_0
+    + a\sin(\omega t)
+    + b\cos(\omega t)
+    \tag{24}
+\end{equation}
+
+The sinusoidal amplitude and phase were then calculated as
+
+\begin{equation}
+    A_q
+    = \sqrt{a^2+b^2},
+    \qquad
+    \phi_q
+    = \tan^{-1}\left(\frac{b}{a}\right)
+    \tag{25}
+\end{equation}
+
+The frequency-response magnitude was calculated from
+
+\begin{equation}
+    |G(j\omega)|
+    = \frac{A_{\mathrm{out}}}{A_{\mathrm{in}}}
+    \tag{26}
+\end{equation}
+
+and in decibels,
+
+\begin{equation}
+    G_{\mathrm{dB}}
+    = 20\log_{10}|G(j\omega)|
+    \tag{27}
+\end{equation}
+
+The phase lag was obtained from
+
+\begin{equation}
+    \phi
+    = \phi_{\mathrm{out}}-\phi_{\mathrm{in}}
+    \tag{28}
+\end{equation}
+
+The measured magnitude and aligned phase values are listed in
+\cref{tab:freq}.
+
+The raw phase measurements contained an additional
+frequency-proportional lag very close to
+
+\[
+\omega(0.1~\mathrm{s}).
+\]
+
+Since the manual specifies a \SI{100}{ms} logging interval
+\cite{manual}, this was treated as a one-sample alignment effect
+rather than part of the continuous-time plant.
+
+The plotted phase values therefore use the correction
+
+\begin{equation}
+    \phi_{\mathrm{aligned}}
+    = \phi_{\mathrm{raw}}
+    + \omega(0.1)\frac{180}{\pi}
+    \tag{29}
+\end{equation}
+
+This correction makes the measured phase consistent with the
+simultaneously measured magnitude and the step-response dynamics.
+
+\begin{table}[H]
+    \centering
+    \caption{Measured frequency-response data.}
+    \label{tab:freq}
+
+    \renewcommand{\arraystretch}{1.35}
+
+    \begin{tabular}{
+        |>{\centering\arraybackslash}p{0.16\textwidth}
+        |>{\centering\arraybackslash}p{0.20\textwidth}
+        |>{\centering\arraybackslash}p{0.20\textwidth}
+        |>{\centering\arraybackslash}p{0.22\textwidth}|
+    }
+        \hline
+
+        \rowcolor{gray!15}
+        \textbf{$\omega$ (rad/s)} &
+        \textbf{$|G(j\omega)|$} &
+        \textbf{Magnitude (dB)} &
+        \textbf{Aligned phase (deg)} \\
+
+        \hline
+
+        0.5 & 0.631  & -4.00  & -23.5  \\
+        \hline
+        0.8 & 0.615  & -4.22  & -38.4  \\
+        \hline
+        1.0 & 0.595  & -4.51  & -48.7  \\
+        \hline
+        1.4 & 0.530  & -5.52  & -69.3  \\
+        \hline
+        1.8 & 0.441  & -7.10  & -87.9  \\
+        \hline
+        2.2 & 0.353  & -9.05  & -103.2 \\
+        \hline
+        3.0 & 0.221  & -13.10 & -124.2 \\
+        \hline
+        5.0 & 0.0875 & -21.16 & -148.0 \\
+        \hline
+        8.0 & 0.0357 & -28.96 & -161.3 \\
+
+        \hline
+    \end{tabular}
+\end{table}
+
+\Cref{fig:bodemag,fig:bodephase} show the measured
+frequency-response points together with the final model introduced
+later in \Cref{sec:finalmodel}.
+
+The magnitude falls monotonically rather than showing a resonance
+peak.
+
+This is expected because a standard second-order low-pass system
+has a resonance peak only when
+
+\begin{equation}
+    \zeta
+    < \frac{1}{\sqrt{2}}
+    \approx \mathbf{0.707}
+    \tag{30}
+\end{equation}
+
+The step response already indicated a damping ratio close to
+
+\begin{equation}
+    \zeta \approx \mathbf{0.745}
+    \tag{31}
+\end{equation}
+
+Thus, the lack of a resonance peak is consistent with, rather than
+contradictory to, the small time-domain overshoot.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[
+        width=0.78\textwidth
+    ]{bode_magnitude.png}
+    \caption{
+        Measured frequency-response magnitude and final-model
+        prediction.
+    }
+    \label{fig:bodemag}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[
+        width=0.78\textwidth
+    ]{bode_phase.png}
+    \caption{
+        Aligned measured phase and final-model prediction.
+        The $-90^\circ$ crossing occurs close to the natural frequency.
+    }
+    \label{fig:bodephase}
+\end{figure}
+
+For a standard second-order low-pass model, the phase is exactly
+$-90^\circ$ at
+
+\begin{equation}
+    \omega=\omega_n
+    \tag{32}
+\end{equation}
+
+Linear interpolation between the measured points at
+
+\[
+1.8~\mathrm{rad/s}
+\quad\text{and}\quad
+2.2~\mathrm{rad/s}
+\]
+
+gives
+
+\begin{equation}
+    \omega_{n,\mathrm{freq}}
+    \approx \mathbf{1.854}\,\mathrm{rad/s}
+    \tag{33}
+\end{equation}
+
+The lowest measured frequency gives the low-frequency gain estimate
+
+\begin{equation}
+    K_{\mathrm{freq}}
+    \approx |G(j0.5)|
+    = \mathbf{0.631}
+    \tag{34}
+\end{equation}
+
+At $\omega=\omega_n$, a second-order model satisfies
+
+\begin{equation}
+    |G(j\omega_n)|
+    = \frac{K}{2\zeta}
+    \tag{35}
+\end{equation}
+
+Interpolating the measured magnitude at the $-90^\circ$ crossing
+gives
+
+\begin{equation}
+    |G(j\omega_n)|
+    \approx \mathbf{0.429}
+    \tag{36}
+\end{equation}
+
+\newpage
+
+Hence,
+
+\begin{equation}
+    \zeta_{\mathrm{freq}}
+    = \frac{K}{2|G(j\omega_n)|}
+    = \frac{0.631}{2(0.429)}
+    = \mathbf{0.735}
+    \tag{37}
+\end{equation}
+
+The independently identified frequency-domain model is therefore
+
+\begin{equation}
+    \boxed{
+        G_{\mathrm{freq}}(s)
+        =
+        \frac{2.170}
+        {s^2+2.726s+3.437}
+    }
+    \tag{38}
+    \label{eq:gfreq}
+\end{equation}
+
+with poles
+
+\begin{equation}
+    s
+    = \mathbf{-1.363 \pm j1.257}
+    \tag{39}
+\end{equation}
+
+These results closely confirm the gain, damping ratio, natural
+frequency and pole locations obtained from the step response.
+
+% ------------------------------------------------------------
+\subsection{Proposed System Model}
+\label{sec:finalmodel}
+% ------------------------------------------------------------
+
+\Cref{tab:modelcompare} compares the independent parameter
+estimates.
+
+The natural-frequency estimates differ by approximately 2.3\%,
+while the damping-ratio estimates differ by approximately 1.4\%
+relative to their average.
+
+A final model was therefore formed by averaging
+
+\[
+K,
+\qquad
+\zeta,
+\qquad
+\omega_n
+\]
+
+from the two experiments.
+
+\begin{table}[H]
+    \centering
+    \caption{Comparison of identified parameters.}
+    \label{tab:modelcompare}
+
+    \renewcommand{\arraystretch}{1.35}
+
+    \begin{tabular}{
+        |>{\raggedright\arraybackslash}p{0.26\textwidth}
+        |>{\centering\arraybackslash}p{0.16\textwidth}
+        |>{\centering\arraybackslash}p{0.16\textwidth}
+        |>{\centering\arraybackslash}p{0.24\textwidth}|
+    }
+        \hline
+
+        \rowcolor{gray!15}
+        \textbf{Estimate} &
+        \textbf{$K$} &
+        \textbf{$\zeta$} &
+        \textbf{$\omega_n$ (rad/s)} \\
+
+        \hline
+
+        Step test &
+        0.638 &
+        0.745 &
+        1.813 \\
+
+        \hline
+
+        Frequency test &
+        0.631 &
+        0.735 &
+        1.854 \\
+
+        \hline
+
+        \textbf{Final average} &
+        \textbf{0.635} &
+        \textbf{0.740} &
+        \textbf{1.833} \\
+
+        \hline
+    \end{tabular}
+\end{table}
+
+The proposed model is
+
+\begin{equation}
+    \boxed{
+        G(s)
+        = \frac{X(s)}{U(s)}
+        = \frac{2.133}
+        {s^2+2.715s+3.361}
+    }
+    \tag{40}
+    \label{eq:finaltf}
+\end{equation}
+
+with poles
+
+\begin{equation}
+    \boxed{
+        s=\mathbf{-1.357\pm j1.233}
+    }
+    \tag{41}
+\end{equation}
+
+Using \Cref{eq:parameter_map}, the final spring and damping
+estimates for the normalized $m=1$ system are
+
+\begin{equation}
+    \boxed{\boldsymbol{b\approx2.715}},
+    \qquad
+    \boxed{\boldsymbol{k\approx3.361}}
+    \tag{42}
+\end{equation}
+
+The numerator
+
+\begin{equation}
+    \boldsymbol{c\approx2.133}
+    \tag{43}
+\end{equation}
+
+represents the proportionality between the simulator input and the
+applied-force term in the normalized model.
+
+The final model parameters are collected in
+\cref{tab:finalparams}.
+
+\begin{table}[H]
+    \centering
+    \caption{Final proposed second-order model parameters.}
+    \label{tab:finalparams}
+
+    \renewcommand{\arraystretch}{1.35}
+
+    \begin{tabular}{
+        |>{\raggedright\arraybackslash}p{0.38\textwidth}
+        |>{\centering\arraybackslash}p{0.22\textwidth}
+        |>{\centering\arraybackslash}p{0.24\textwidth}|
+    }
+        \hline
+
+        \rowcolor{gray!15}
+        \textbf{Quantity} &
+        \textbf{Symbol} &
+        \textbf{Final estimate} \\
+
+        \hline
+
+        DC gain &
+        $K$ &
+        $\mathbf{0.635}$ \\
+
+        \hline
+
+        Damping ratio &
+        $\zeta$ &
+        $\mathbf{0.740}$ \\
+
+        \hline
+
+        Natural frequency &
+        $\omega_n$ &
+        $\mathbf{1.833}~\mathrm{rad/s}$ \\
+
+        \hline
+
+        Damping coefficient &
+        $b$ &
+        $\mathbf{2.715}$ \\
+
+        \hline
+
+        Spring coefficient &
+        $k$ &
+        $\mathbf{3.361}$ \\
+
+        \hline
+
+        Input-force proportionality &
+        $c$ &
+        $\mathbf{2.133}$ \\
+
+        \hline
+
+        Poles &
+        $s_{1,2}$ &
+        $\mathbf{-1.357\pm j1.233}$ \\
+
+        \hline
+    \end{tabular}
+\end{table}
+
+\newpage
+
+% ------------------------------------------------------------
+\subsection{Integral Action for Zero Steady-State Error}
+% ------------------------------------------------------------
+
+The proposed model contains no integrator, so proportional control
+alone would generally leave a non-zero steady-state error for a
+constant reference.
+
+Adding integral action,
+
+\begin{equation}
+    C(s)=\frac{K_i}{s},
+    \tag{44}
+\end{equation}
+
+changes the open-loop system to Type~1. For unity feedback,
+
+\begin{equation}
+    L(s)
+    =
+    \frac{2.133K_i}
+    {s\left(s^2+2.715s+3.361\right)},
+    \tag{45}
+\end{equation}
+
+and therefore, for a step reference,
+
+\begin{equation}
+    e_{ss}
+    =
+    \boxed{\mathbf{0}},
+    \tag{46}
+\end{equation}
+
+provided the closed-loop system is stable.
+
+The characteristic equation becomes
+
+\begin{equation}
+    s^3+2.715s^2+3.361s+2.133K_i=0.
+    \tag{47}
+\end{equation}
+
+Integral action therefore removes the steady-state step-tracking
+error, although $K_i$ must still be tuned to obtain acceptable
+transient performance. Controller design was outside the scope of
+this experiment.
+
+
+% ------------------------------------------------------------
+\subsection{Model Validation}
+% ------------------------------------------------------------
+
+The final model was tested against both experiments.
+
+\Cref{fig:stepvalidation} compares the measured zero-adjusted step
+response to the response predicted by \Cref{eq:finaltf} for the
+same 4-unit input.
+
+The model reproduces the rise, small overshoot and settling
+behaviour closely.
+
+Over the first 12 seconds after the step, the root-mean-square
+displacement error is approximately
+
+\[
+\mathbf{0.028}.
+\]
+
+This corresponds to approximately
+
+\[
+\mathbf{1.1\%}
+\]
+
+of the measured steady-state output change.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[
+        width=0.78\textwidth
+    ]{step_validation.png}
+    \caption{
+        Validation of the proposed model against the measured step
+        response.
+    }
+    \label{fig:stepvalidation}
+\end{figure}
+
+The same model also tracks the measured Bode data in
+\Cref{fig:bodemag,fig:bodephase}.
+
+Across all nine tested frequencies, the RMS magnitude error is
+approximately
+
+\[
+\mathbf{0.27}~\mathrm{dB},
+\]
+
+and the RMS phase error after sample-alignment correction is
+approximately
+
+\[
+\mathbf{0.51}^{\circ}.
+\]
+
+The largest discrepancies remain below approximately
+
+\[
+\mathbf{0.65}~\mathrm{dB}
+\]
+
+in magnitude and
+
+\[
+\mathbf{1}^{\circ}
+\]
+
+in phase.
+
+The strong agreement in both domains indicates that a second-order
+model is sufficient to describe the dominant suspension dynamics
+over the measured range.
+
+The validation statistics are summarised in
+\cref{tab:validation}.
+
+\begin{table}[H]
+    \centering
+    \caption{Summary of model-validation errors.}
+    \label{tab:validation}
+
+    \renewcommand{\arraystretch}{1.35}
+
+    \begin{tabular}{
+        |>{\raggedright\arraybackslash}p{0.27\textwidth}
+        |>{\raggedright\arraybackslash}p{0.37\textwidth}
+        |>{\centering\arraybackslash}p{0.20\textwidth}|
+    }
+        \hline
+
+        \rowcolor{gray!15}
+        \textbf{Validation quantity} &
+        \textbf{Error measure} &
+        \textbf{Result} \\
+
+        \hline
+
+        Step response &
+        RMS displacement error &
+        $\mathbf{0.028}$ \\
+
+        \hline
+
+        Step response &
+        RMS error relative to steady-state change &
+        $\mathbf{1.1\%}$ \\
+
+        \hline
+
+        Bode magnitude &
+        RMS error &
+        $\mathbf{0.27}~\mathrm{dB}$ \\
+
+        \hline
+
+        Bode magnitude &
+        Maximum error &
+        $\mathbf{<0.65}~\mathrm{dB}$ \\
+
+        \hline
+
+        Bode phase &
+        RMS error &
+        $\mathbf{0.51}~\mathrm{deg}$ \\
+
+        \hline
+
+        Bode phase &
+        Maximum error &
+        $\mathbf{<1}~\mathrm{deg}$ \\
+
+        \hline
+    \end{tabular}
+\end{table}
+
+
+
+% ============================================================
+% 4. Conclusion
+% ============================================================
+
+\section{Conclusion}
+
+A second-order model of the suspension simulator was successfully
+identified from independent step- and frequency-response tests.
+
+The independent estimates are compared in
+\cref{tab:modelcompare}, and the final parameter set is summarised
+in \cref{tab:finalparams}.
+
+The step response had a steady-state gain of approximately
+\textbf{0.638}, a small overshoot of \textbf{2.98\%}, and a peak
+time of \textbf{2.6 s}, giving
+
+\[
+\zeta\approx\mathbf{0.745},
+\]
+
+\[
+\omega_n
+\approx
+\mathbf{1.813}\,\mathrm{rad/s},
+\]
+
+and poles at approximately
+
+\[
+\mathbf{-1.351\pm j1.208}.
+\]
+
+The frequency test independently produced
+
+\[
+K\approx\mathbf{0.631},
+\]
+
+\[
+\zeta\approx\mathbf{0.735},
+\]
+
+and
+
+\[
+\omega_n
+\approx
+\mathbf{1.854}\,\mathrm{rad/s},
+\]
+
+confirming the time-domain result.
+
+Averaging the two parameter sets gave the proposed transfer
+function
+
+\[
+\boxed{
+G(s)
+=
+\frac{2.133}
+{s^2+2.715s+3.361}
+}.
+\]
+
+This corresponds to
+
+\[
+\boldsymbol{b\approx2.715}
+\]
+
+and
+
+\[
+\boldsymbol{k\approx3.361}
+\]
+
+for the normalized $m=1$ system.
+
+The model closely reproduced both the measured step response and
+all nine frequency-response points.
+
+The absence of a resonant peak in the Bode magnitude is also
+consistent with the estimated damping ratio being slightly greater
+than
+
+\[
+\frac{1}{\sqrt{2}}.
+\]
+
+Overall, the identified transfer function provides a simple and
+well-validated representation of the dominant dynamics of the
+experimental system.
+
+\newpage
+
+% ============================================================
+% APPENDIX
+% ============================================================
 
 \appendix
-\include{tex/appendix}
+
+\section{Appendix and Notes}
+\label{sec:appendix}
+
+The complete analysis has been archived in a public GitHub
+repository.
+
+Instead of reproducing several hundred lines of MATLAB code and
+large raw CSV datasets inside this report, the appendix provides
+direct links to the exact files used to generate the results.
+
+This keeps the report concise while preserving full
+reproducibility.
+
+\begin{center}
+    \href{\repourl}{
+        \textbf{
+            Open the complete EEE3094S Lab 1 GitHub repository
+        }
+    }
+\end{center}
+
+% ------------------------------------------------------------
+\subsection{MATLAB Analysis Code}
+% ------------------------------------------------------------
+
+The two MATLAB scripts used for identification and validation are
+available directly from the repository.
+
+\begin{table}[H]
+    \centering
+    \caption{Clickable links to MATLAB analysis scripts.}
+    \label{tab:codelinks}
+
+    \renewcommand{\arraystretch}{1.35}
+
+    \begin{tabular}{
+        |>{\raggedright\arraybackslash}p{0.29\textwidth}
+        |>{\raggedright\arraybackslash}p{0.57\textwidth}|
+    }
+        \hline
+
+        \rowcolor{gray!15}
+        \textbf{File} &
+        \textbf{Purpose} \\
+
+        \hline
+
+        \href{\stepcodeurl}{
+            \textbf{Step-response MATLAB script}
+        }
+        &
+        Reads the raw step-test CSV, identifies the step, calculates gain,
+        overshoot, damping ratio, natural frequency and poles, constructs
+        the step-test transfer function, validates the response and exports
+        step-response figures. \\
+
+        \hline
+
+        \href{\bodecodeurl}{
+            \textbf{Bode/frequency MATLAB script}
+        }
+        &
+        Reads the nine frequency-test CSV files, estimates sinusoidal
+        amplitudes and phase, constructs the measured Bode data, estimates
+        the frequency-domain model, compares it with the step model and
+        exports the Bode-validation figures. \\
+
+        \hline
+    \end{tabular}
+\end{table}
+
+\newpage
+
+% ------------------------------------------------------------
+\subsection{Experimental and Processed Data}
+% ------------------------------------------------------------
+
+The raw laboratory files and MATLAB-generated result tables are
+available through the links in \Cref{tab:datalinks}.
+
+\begin{table}[H]
+    \centering
+    \caption{Clickable links to experimental and processed data.}
+    \label{tab:datalinks}
+
+    \renewcommand{\arraystretch}{1.35}
+
+    \begin{tabular}{
+        |>{\raggedright\arraybackslash}p{0.31\textwidth}
+        |>{\raggedright\arraybackslash}p{0.55\textwidth}|
+    }
+        \hline
+
+        \rowcolor{gray!15}
+        \textbf{Resource} &
+        \textbf{Contents} \\
+
+        \hline
+
+        \href{\stepdataurl}{
+            \textbf{Raw step-test data}
+        }
+        &
+        Original step-response CSV together with the laboratory
+        step-test images. \\
+
+        \hline
+
+        \href{\freqdataurl}{
+            \textbf{Raw frequency-test data}
+        }
+        &
+        Original CSV files for the nine tested frequencies:
+        0.5, 0.8, 1.0, 1.4, 1.8, 2.2, 3.0, 5.0 and 8.0 rad/s. \\
+
+        \hline
+
+        \href{\stepprocessedurl}{
+            \textbf{Processed step-identification results}
+        }
+        &
+        MATLAB-generated summary of the identified time-domain
+        parameters. \\
+
+        \hline
+
+        \href{\freqprocessedurl}{
+            \textbf{Processed frequency-response results}
+        }
+        &
+        MATLAB-generated magnitude and phase results for the
+        sinusoidal tests. \\
+
+        \hline
+
+        \href{\modelcomparisonurl}{
+            \textbf{Model comparison results}
+        }
+        &
+        MATLAB-generated comparison of the step-test, frequency-test
+        and final combined models. \\
+
+        \hline
+    \end{tabular}
+\end{table}
+
+% ------------------------------------------------------------
+\subsection{Figures and Report Source}
+% ------------------------------------------------------------
+
+For completeness, the generated figures and report files are also
+available online.
+
+\begin{table}[H]
+    \centering
+    \caption{Clickable links to generated figures and report files.}
+    \label{tab:reprolinks}
+
+    \renewcommand{\arraystretch}{1.35}
+
+    \begin{tabular}{
+        |>{\raggedright\arraybackslash}p{0.31\textwidth}
+        |>{\raggedright\arraybackslash}p{0.55\textwidth}|
+    }
+        \hline
+
+        \rowcolor{gray!15}
+        \textbf{Resource} &
+        \textbf{Description} \\
+
+        \hline
+
+        \href{\figuresurl}{
+            \textbf{Figures folder}
+        }
+        &
+        Exported step-response, Bode and model-validation figures
+        used in this report. \\
+
+        \hline
+
+        \href{\latexurl}{
+            \textbf{LaTeX source (\texttt{main.tex})}
+        }
+        &
+        Source used to compile the report, including clickable
+        contents, figure/table references and repository links. \\
+
+        \hline
+
+        \href{\reportpdfurl}{
+            \textbf{Final PDF report}
+        }
+        &
+        Compiled version of the submitted Lab 1 report. \\
+
+        \hline
+
+        \href{\repourl}{
+            \textbf{Repository home page}
+        }
+        &
+        Complete project structure, README and version history. \\
+
+        \hline
+    \end{tabular}
+\end{table}
+
+\newpage
+
+% ------------------------------------------------------------
+\subsection{Reproducibility Note}
+% ------------------------------------------------------------
+
+To reproduce the analysis, download or clone the repository and
+keep the
+
+\[
+\texttt{Data},
+\qquad
+\texttt{Matlab},
+\qquad
+\texttt{Figures}
+\]
+
+folders in their current relative locations.
+
+\vspace{0.5cm}
+
+Run
+
+\href{\stepcodeurl}{
+    \texttt{step\_response\_validation.m}
+}
+
+followed by
+
+\href{\bodecodeurl}{
+    \texttt{bode\_validation.m}
+}
+
+in MATLAB.
+
+\vspace{0.5cm}
+
+The scripts read the experimental CSV files and regenerate the
+identification results and figures used in this report.
+
+% ============================================================
+% REFERENCES
+% ============================================================
 
 \clearpage
 \phantomsection
 \addcontentsline{toc}{section}{References}
+
 \begin{thebibliography}{9}
+
 \bibitem{labbrief}
-EEE3094S Control Systems Engineering, \emph{Lab 1: System Identification}, University of Cape Town, 2026.
+EEE3094S Control Systems Engineering,
+\emph{Lab 1: System Identification},
+University of Cape Town, 2026.
 
 \bibitem{manual}
-UCT Control Laboratory, \emph{Control Laboratory Suspension Simulator User Manual}, Release 1.0, 10 Aug. 2023.
+UCT Control Laboratory,
+\emph{Control Laboratory Suspension Simulator User Manual},
+Release 1.0, 10 Aug. 2023.
+
+\bibitem{githubrepo}
+J. Pieters,
+``EEE3094S Lab 1 -- System Identification: Experimental Data,
+MATLAB Analysis and Report Source,''
+GitHub repository, 2026.
+[Online]. Available:
+\url{
+https://github.com/NateDogg247/EEE3094S---Lab1-System-Identification
+}
+
 \end{thebibliography}
 
 \end{document}
