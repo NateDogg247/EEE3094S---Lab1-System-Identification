@@ -18,7 +18,7 @@ frequency-response experiments.
 The final estimated model is approximately:
 
 $$
-G(s)=\frac{2.133}{s^2+2.715s+3.361}
+\boldsymbol{G(s)=\frac{2.133}{s^2+2.715s+3.361}}
 $$
 
 Approximate parameters:
