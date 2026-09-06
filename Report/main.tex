@@ -1,0 +1,100 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{float}
+\usepackage{siunitx}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{microtype}
+\usepackage[
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=blue!55!black,
+  urlcolor=blue!55!black,
+  linktoc=all,
+  bookmarksopen=true,
+  bookmarksnumbered=true
+]{hyperref}
+\usepackage[nameinlink,capitalise,noabbrev]{cleveref}
+
+\linespread{1.06}
+\setlength{\parskip}{7pt plus 2pt minus 1pt}
+\setlength{\parindent}{0pt}
+\widowpenalty=10000
+\clubpenalty=10000
+\setlist{nosep}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\newcommand{\studentnumber}{\textit{Student number: add here}}
+\sisetup{round-mode=places,round-precision=3}
+\urlstyle{same}
+\hypersetup{
+  pdftitle={EEE3094S Lab 1 - System Identification},
+  pdfauthor={Junaid Pieters},
+  pdfsubject={System identification of a simulated spring-mass-damper suspension system}
+}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  numbers=left,
+  numberstyle=\tiny,
+  frame=single,
+  breaklines=true,
+  columns=fullflexible,
+  showstringspaces=false
+}
+
+\begin{document}
+
+\hypersetup{pageanchor=false}
+\include{tex/titlepage}
+\clearpage
+\hypersetup{pageanchor=true}
+\pagenumbering{roman}
+
+\tableofcontents
+\clearpage
+
+\phantomsection
+\addcontentsline{toc}{section}{List of Figures}
+\listoffigures
+\clearpage
+
+\phantomsection
+\addcontentsline{toc}{section}{List of Tables}
+\listoftables
+\clearpage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{tex/introduction}
+\input{tex/system_modelling}
+\input{tex/system_id}
+\input{tex/conclusion}
+
+\appendix
+\include{tex/appendix}
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{section}{References}
+\begin{thebibliography}{9}
+\bibitem{labbrief}
+EEE3094S Control Systems Engineering, \emph{Lab 1: System Identification}, University of Cape Town, 2026.
+
+\bibitem{manual}
+UCT Control Laboratory, \emph{Control Laboratory Suspension Simulator User Manual}, Release 1.0, 10 Aug. 2023.
+\end{thebibliography}
+
+\end{document}

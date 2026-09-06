@@ -1,0 +1,12 @@
+Parameter,Value
+DC Gain,0.638
+Percentage Overshoot,2.97805642633231
+Damping Ratio,0.745496653468051
+Damped Frequency (rad/s),1.20830486676531
+Natural Frequency (rad/s),1.81288504259423
+Corner Frequency (rad/s),1.81288504259423
+Pole Real Part,-1.35149973237629
+Pole Imaginary Part,1.20830486676531
+Numerator,2.09682028934829
+Denominator s coefficient,2.70299946475257
+Denominator constant,3.2865521776619
