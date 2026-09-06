@@ -1,6 +1,6 @@
 # EEE3094S Lab 1 - System Identification
 
-**Student:** Junaid Pieters  
+**Student:** Junaid Pieters (PTRJUN003) 
 **Course:** EEE3094S Control Systems Engineering  
 **University:** University of Cape Town  
 
@@ -17,7 +17,9 @@ frequency-response experiments.
 
 The final estimated model is approximately:
 
-G(s) = 2.133 / (s^2 + 2.715s + 3.361)
+$$
+G(s)=\frac{2.133}{s^2+2.715s+3.361}
+$$
 
 Approximate parameters:
 
